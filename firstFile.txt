@@ -21,7 +21,7 @@ function initTestSetup(){
 	APP.getUserInfo().setFrameworkEntry("globalUserTimeFormat", "HH12:MI"); //Required for TimeFieldView
 	APP.setLargeScreenMode(true);
 }
-
+//TESTreabase
 function isRunningOnDesktop(){
 	return true;
 }
