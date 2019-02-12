@@ -2,7 +2,7 @@
  * Files contains initial setup required to run Jasmine Tests
  */
 //test2
-//testrebase 5
+a//testrebase 5
 //testrebaseMaster
 function initTestSetup(){
 	APP.userInfoSettings();
