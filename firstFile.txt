@@ -1,7 +1,7 @@
 /*
  * Files contains initial setup required to run Jasmine Tests
  */
-
+//test2
 function initTestSetup(){
 	APP.userInfoSettings();
 	APP.coreInfo = new CoreInfo({
