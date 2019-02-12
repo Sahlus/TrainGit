@@ -25,7 +25,7 @@ function initTestSetup(){
 function isRunningOnDesktop(){
 	return true;
 }
-
+//test3
 function getBasicDataGrid(id, params){
 	var tempId = id ? id : "DataGrid_TEST";
 	
