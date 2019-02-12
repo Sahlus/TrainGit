@@ -1,4 +1,4 @@
-describe("engine/views/widgets/datagrid/DataGridFilterCard.js Testings the facet filters", function() {
+Adescribe("engine/views/widgets/datagrid/DataGridFilterCard.js Testings the facet filters", function() {
 	var dataGridWithFacetFilter = null;
 	var facetContainer = null;
 	
