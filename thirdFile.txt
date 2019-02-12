@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Bdescribe("engine/views/widgets/datagrid/DataGridFilterCard.js Testings the facet filters", function() {
+=======
+Adescribe("engine/views/widgets/datagrid/DataGridFilterCard.js Testings the facet filters", function() {
+>>>>>>> branche070
 	var dataGridWithFacetFilter = null;
 	var facetContainer = null;
 	
