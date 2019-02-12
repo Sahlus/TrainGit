@@ -3,6 +3,7 @@
  */
 //test2
 //testrebase 5
+//testrebaseMaster
 function initTestSetup(){
 	APP.userInfoSettings();
 	APP.coreInfo = new CoreInfo({
