@@ -1,0 +1,180 @@
+describe("/engine/views/widgets/DataGridErrorSpec.js  with DataGrid",function() {
+
+	var datagrid;
+			beforeAll(function() {
+
+				initTestSetup();
+				APP.userInfoSettings();
+				this.basicDataGrid = getBasicDataGrid('testDataGrid');
+				datagrid = this.basicDataGrid;
+				this.basicDataGridEl = this.basicDataGrid.getViewElement();
+				// Append Datagrid element to the document
+				document.documentElement.appendChild(this.basicDataGridEl[0]);
+				this.field = this.basicDataGridEl[0]
+						.getElementsByClassName("seyc-datagrid-cell seyc-datagrid-editableCell-bg");
+				/*var technicalError = "Error Test";
+				this.basicDataGrid.setTechnicalError(0, 1, technicalError,true, "", true);
+				this.basicDataGrid.setTechnicalError(0, 2, technicalError,true, "", true);
+				this.basicDataGrid.setTechnicalError(0, 3, technicalError,true, "", true);
+				var error = this.basicDataGrid.getTechnicalError(0, 1);
+				var error1 = this.basicDataGrid.getTechnicalError(0, 2);
+				var error2 = this.basicDataGrid.getTechnicalError(0, 3);
+				var colName = this.basicDataGrid.getAdapter().getColumnNameByIndex(1);
+				var colName1 = this.basicDataGrid.getAdapter().getColumnNameByIndex(2);
+				var colname2 = this.basicDataGrid.getAdapter().getColumnNameByIndex(3);
+				var colname2 = this.basicDataGrid.getAdapter().getColumnNameByIndex(4);
+				var colname2 = this.basicDataGrid.getAdapter().getColumnNameByIndex(5);
+
+				var rowId = this.basicDataGrid.getAdapter().getRowModelIndex(0);
+
+				var brErrorWarning = this.basicDataGrid._errorsAndWarningsCallback
+						.call(this.basicDataGrid.getCallbackContext(), {
+							datagrid : this.basicDataGrid,
+							row : "0",
+							columnName : colName,
+							modelIdx : rowId
+						});
+				var brErrorWarning1 = this.basicDataGrid._errorsAndWarningsCallback
+						.call(this.basicDataGrid.getCallbackContext(), {
+							datagrid : this.basicDataGrid,
+							row : "0",
+							columnName : "integer",
+							modelIdx : rowId
+						});
+				var brErrorWarning2 = this.basicDataGrid._errorsAndWarningsCallback
+						.call(this.basicDataGrid.getCallbackContext(), {
+							datagrid : this.basicDataGrid,
+							row : "0",
+							columnName : "decimal",
+							modelIdx : rowId
+						});
+				var brErrorWarning3 = this.basicDataGrid._errorsAndWarningsCallback
+						.call(this.basicDataGrid.getCallbackContext(), {
+							datagrid : this.basicDataGrid,
+							row : "0",
+							columnName : "N/A",
+							modelIdx : rowId
+						});
+				var brErrorWarning4 = this.basicDataGrid._errorsAndWarningsCallback
+						.call(this.basicDataGrid.getCallbackContext(), {
+							datagrid : this.basicDataGrid,
+							row : "0",
+							columnName : "undefined",
+							modelIdx : rowId
+						});
+				var errorClass = this.field["cell-0-1"].classList[1];
+				//this.basicDataGrid.removeTechnicalError(0, 1, true);
+				error = this.basicDataGrid.getTechnicalError(0, 1);
+				errorClass = this.field["cell-0-1"].classList[1];
+
+				var errorClass1 = this.field["cell-0-2"].classList[2];
+				this.basicDataGrid.removeTechnicalError(0, 2, true);
+				error1 = this.basicDataGrid.getTechnicalError(0, 2);
+				errorClass1 = this.field["cell-0-2"].classList[2];
+				
+				var errorClass2 = this.field["cell-0-3"].classList[2];
+				this.basicDataGrid.removeTechnicalError(0, 3, true);
+				error2 = this.basicDataGrid.getTechnicalError(0, 3);
+				errorClass2 = this.field["cell-0-3"].classList[2];
+				*/
+
+			});
+
+			it("column with business error should have the error CSS class - GLIB19010075", function() {
+				// Test GLIB19010075 : Buisiness error disapear when we remove
+				// technical error
+				
+				// because there is already a business error we should have this CSS
+				expect(this.field["cell-0-1"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(true);
+							
+				// but there should be no technical errors
+				var error = this.basicDataGrid.getTechnicalError(0, 1);
+				expect(error).toEqual(null);
+				
+				// now we add a technical error
+				var errorTxt = "zeroone error"
+				this.basicDataGrid.setTechnicalError(0, 1, errorTxt,true, "", true);
+				
+				// and check that we have it and that we still have the CSS
+				var error = this.basicDataGrid.getTechnicalError(0, 1);
+				expect(error).toEqual(errorTxt);				
+				expect(this.field["cell-0-1"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(true);
+				
+				// now remove the technical error
+				this.basicDataGrid.removeTechnicalError(0,1,true)
+				
+				// because we have a business error on this we should still have the error CSS				
+				expect(this.field["cell-0-1"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(true);
+				
+				// but technical error should be gone
+				var error = this.basicDataGrid.getTechnicalError(0, 1);
+				expect(error).toEqual(null);
+				
+			});
+			it("column with business warning should have the warning CSS class - GLIB19010075", function() {
+				// Test GLIB19010075 : Buisiness warning disapear when we remove
+				// technical warning
+				
+				// because there is already a business warning we should have this CSS
+				expect(this.field["cell-0-4"].classList.contains("seyc-datagrid-cell-with-warning")).toEqual(true);
+							
+				// but there should be no technical warnings
+				var warning = this.basicDataGrid.getTechnicalWarning(0, 4);
+				expect(warning).toEqual(null);
+				
+				// now we add a technical warning
+				var warningTxt = "zeroone warning"
+				this.basicDataGrid.setTechnicalWarning(0, 4, warningTxt,true, "", true);
+				
+				// and check that we have it and that we still have the CSS
+				var warning = this.basicDataGrid.getTechnicalWarning(0, 4);
+				expect(warning).toEqual(warningTxt);				
+				expect(this.field["cell-0-4"].classList.contains("seyc-datagrid-cell-with-warning")).toEqual(true);
+				
+				// now remove the technical warning
+				this.basicDataGrid.removeTechnicalWarning(0,4,true)
+				
+				// because we have a business warning on this we should still have the warning CSS				
+				expect(this.field["cell-0-4"].classList.contains("seyc-datagrid-cell-with-warning")).toEqual(true);
+				
+				// but technical warning should be gone
+				var warning = this.basicDataGrid.getTechnicalWarning(0, 4);
+				expect(warning).toEqual(null);
+				
+			});
+			it("null business error column should not have the error class message - GLIB19010075",function() {
+				// Test GLIB19010075 : Buisiness warning disapear when we
+				// remove technical error
+				expect(this.field["cell-0-2"].classList[2]).toEqual(undefined);
+				
+				// at the start there should be no error on this column
+				expect(this.field["cell-0-2"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(false);
+								
+				// we set technical error and check that CSS was added
+				this.basicDataGrid.setTechnicalError(0, 2, "zerotwo error",true, "", true);
+				expect(this.field["cell-0-2"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(true);
+
+				// now we remove the technical error
+				this.basicDataGrid.removeTechnicalError(0,2,true)
+				
+				// we should not have the error CSS
+				expect(this.field["cell-0-2"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(false);
+			});
+			
+			it("undefined business error column should not have the error class message - GLIB19010075", function() {
+				// Test GLIB19010075 : Buisiness error disapear when we remove
+				// technical error
+				var technicalError="zerothree error";
+				this.basicDataGrid.setTechnicalError(0, 3, technicalError,true, "", true);
+				expect(this.field["cell-0-3"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(true);
+				
+				// now remove the technical error
+				this.basicDataGrid.removeTechnicalError(0, 3, true);
+				expect(this.field["cell-0-3"].classList.contains("seyc-datagrid-cell-with-error")).toEqual(false);
+			});
+			
+			afterAll(function() {
+				// remove Datagrid element to the document
+				document.documentElement.removeChild(this.basicDataGridEl[0]);
+			});
+		});

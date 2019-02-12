@@ -1,0 +1,59 @@
+describe("engine/views/widgets/datagrid/DataGridFilterCard.js Testings the facet filters", function() {
+	var dataGridWithFacetFilter = null;
+	var facetContainer = null;
+	
+	beforeAll(function(done) {
+		initTestSetup();
+
+		if(APP.transactionStack.length === 0){
+			showTransaction(eval("Login"));
+		}
+		showTransaction(eval("TransactionsDemoTest"));
+		
+		setTimeout(function(){
+			
+			dataGridWithFacetFilter = getBasicDataGrid('dataGridWithFacetFilter', {filter: true});
+			
+			T_CONTENT.add(dataGridWithFacetFilter);
+				
+			var buttonOptionsDataGrid = dataGridWithFacetFilter.getViewByID("dataGridWithFacetFiltergridOptions");
+			//Open options like if button was clicked but without triggering a click to don't have the setTimeout
+			buttonOptionsDataGrid.buttonTapped.notify({}, null, buttonOptionsDataGrid);
+			
+			//Check that facet container is closed
+			facetContainer = dataGridWithFacetFilter._element.find("#dataGridWithFacetFilter-facetContainer")[0];
+			expect(facetContainer.className).toContain("hideBlock");
+			
+			//Open facet filters
+			var buttonFacetFilters = dataGridWithFacetFilter.getViewByID("dataGridWithFacetFilterfacetFiltering");
+			buttonFacetFilters.buttonTapped.notify({}, null, buttonFacetFilters);
+			
+			done();
+		}, 100);
+		
+		
+	});
+	
+	it("Test facet filters panel opened", function(){
+		expect(facetContainer.className).not.toContain("hideBlock");
+	});
+
+	
+	it("Test filter on one specific row", function(done){
+		//Activate filter on first value of first column
+		dataGridWithFacetFilter.getViewByID("string-filterCard-checkbox0").setValue(1);
+		
+		setTimeout(function(){
+			expect(dataGridWithFacetFilter.getRowCount()).toEqual(1);
+			dataGridWithFacetFilter.getViewByID("string-filterCard-checkbox0").setValue(0);
+			done();
+		}, 850); //Timeout of 850 to be more than 800 of Filter Card
+	});
+	
+	afterAll(function(){
+		var transaction = APP.activeController.getTransaction();
+		//Close the transaction
+		transaction.setState(TRANS.END);
+	});
+  
+});
